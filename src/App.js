@@ -1,24 +1,33 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Home from './components/Home';
+import Projects from './components/Projects'; 
+
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function App() {
+  // Redux store'dan darkMode durumunu alıyoruz
+  const darkMode = useSelector((state) => state.darkMode.darkMode);
+
+  // useEffect ile darkMode durumuna göre stil değişikliği yapabilirsiniz
+  React.useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [darkMode]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Routes> 
+          <Route path='/' element={<Home />} />
+          <Route path="/projects" element={<Projects />} />  
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
